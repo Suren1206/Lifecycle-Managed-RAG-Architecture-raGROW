@@ -75,7 +75,9 @@ To build a system that reflects architectural rigor, lifecycle thinking, and eng
 
 
 # Phase II (Planned)
+
 Phase II will extend raGROW in three focused directions:
+
     1. Emergency Controlled Incremental Mode
     
     2. Optimization of accuracy through calibration experiments
