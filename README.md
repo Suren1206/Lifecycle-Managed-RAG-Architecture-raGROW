@@ -79,28 +79,30 @@ logs/
 ```
 
 
-How to Run
+## How to Run
+______________________________________________________
 
-Install dependencies (Python 3.10+ recommended)
+### Install dependencies (Python 3.10+ recommended)
 
-Ensure Ollama is running locally
+### Ensure Ollama is running locally
 
-Activate environment
+### Activate environment
 
-Run:
+### Run:
 ```text
 streamlit run app.py
 ```
-Select role from sidebar:
+### Select role from sidebar:
 
-Employee
+#### Employee
 
-Maker
+#### Maker
 
-Checker
+#### Checker
 
-Admin
+#### Admin
 
+____________________________________________________________
 
 # Trinity Goals Behind raGROW
 raGROW was developed under three simultaneous intentions:
