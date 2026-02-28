@@ -85,25 +85,25 @@ logs/
 ## How to Run
 ______________________________________________________
 
-### Install dependencies (Python 3.10+ recommended)
+### 1) Install dependencies (Python 3.10+ recommended)
 
-### Ensure Ollama is running locally
+### 2) Ensure Ollama is running locally
 
-### Activate environment
+### 3) Activate environment
 
-### Run:
+### 4) Run:
 ```text
 streamlit run app.py
 ```
-### Select role from sidebar:
+### 5) Select role from sidebar:
 
-#### Employee
+#### (a) Employee
 
-#### Maker
+#### (b) Maker
 
-#### Checker
+#### (c) Checker
 
-#### Admin
+#### (d) Admin
 
 ____________________________________________________________
 
