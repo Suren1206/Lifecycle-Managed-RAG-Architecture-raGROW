@@ -76,6 +76,9 @@ data/
 
 logs/
     rag_logs.db               # Governance database
+
+## Note : Replace master_corpus_sample.txt with your own HR policy corpus and rename to master_corpus.txt before running.
+
 ```
 
 
