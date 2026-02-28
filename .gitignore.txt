@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+langchain_env/
+venv/
+
+# Vector stores
+data/vector_store/
+
+# Logs and databases
+logs/
+*.db
+
+# OS files
+.DS_Store
