@@ -107,7 +107,11 @@ the next research track will be precision-first.
 
 # Closing Note
 raGROW began as a simple idea:
+
 What if RAG could grow — but with discipline?
+
 It evolved into a lifecycle-governed system capable of controlled mutation, version integrity, and measurable oversight.
+
 It is not built to impress a demo.
+
 It is built to endure growth.
