@@ -20,17 +20,29 @@ Every interaction is auditable.
 
 # Phase I Capabilities
 Phase I establishes the structural foundation:
+
     • Deterministic chunking (800-character fixed window)
+    
     • Cosine similarity retrieval (FAISS IndexFlatIP)
+    
     • Threshold-based routing (0.75 / 0.60)
+    
     • Controlled generation (HIGH band only)
+    
     • Version lifecycle governance (STAGING → ACTIVE)
+    
     • Maker–Checker approval discipline
+    
     • Full rebuild mutation engine (ADD / MODIFY / DELETE)
+    
     • Single ACTIVE invariance enforcement
+    
     • Governance analytics via SQL-backed reporting
+    
     • Rollback-safe activation
+    
     • Streamlit-based role-separated UI
+    
 The system supports:
 Employee
 Maker
