@@ -58,6 +58,50 @@ with strict isolation and lifecycle discipline.
     • No hard-coded environment assumptions
     • Full version traceability
 
+## Folder Structure (Key Components)
+
+```text
+app.py                         # Streamlit UI (role-based routing)
+
+rag_engine/
+    retriever.py              # FAISS retrieval logic
+    generator.py              # Controlled generation layer
+    mutation_engine.py        # Corpus mutation (ADD/MODIFY/DELETE)
+    logger.py                 # Version registry + interaction logging
+    build_pipeline.py         # Vector rebuild process
+
+data/
+    master_corpus.txt         # Canonical mutable corpus
+    vector_store/             # Versioned FAISS indices
+
+logs/
+    rag_logs.db               # Governance database
+```
+
+
+How to Run
+
+Install dependencies (Python 3.10+ recommended)
+
+Ensure Ollama is running locally
+
+Activate environment
+
+Run:
+```text
+streamlit run app.py
+```
+Select role from sidebar:
+
+Employee
+
+Maker
+
+Checker
+
+Admin
+
+
 # Trinity Goals Behind raGROW
 raGROW was developed under three simultaneous intentions:
 
