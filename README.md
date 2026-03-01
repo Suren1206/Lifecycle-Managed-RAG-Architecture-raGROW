@@ -84,14 +84,15 @@ logs/
 
 ## How to Run
 ______________________________________________________
-```
-### 1) a) Install dependencies (Python 3.10+ recommended)
-       b) Ensure Ollama is running locally
-       c) Make sure the embedding model is available (mxbai-embed-large:335m)
+
+### 1) Pre-requisites
+        a) Install dependencies (Python 3.10+ recommended)
+        b) Ensure Ollama is running locally
+        c) Make sure the embedding model is available (mxbai-embed-large:335m)
 
 ### 2) Run :
 ```text
-streamlit run app.py
+python -m rag_engine.build_pipeline
 ```
 This creates:
     data/vector_store/<version_id>/
@@ -99,13 +100,13 @@ This creates:
 
 ### 3) Run:
 ```text
-python -m rag_engine.build_pipeline
+streamlit run app.py
 ```
-### 4) Select role from sidebar: Maker
+#### a) Select role from sidebar: Maker
     Activate Batch number shown by the tool
     Confirmation message on new batch shownGo
 
-### 5) Choose role from sidebar : Employee
+#### b) Choose role from sidebar : Employee
     Start asking your HR questions (3 independent questions at a time)
          Can refresh (^R) and ask more questions
     Logging can be observed in Checker option
