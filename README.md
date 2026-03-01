@@ -93,8 +93,7 @@ ______________________________________________________
 ```text
 streamlit run app.py
 ```
-strea
-    This creates:
+This creates:
     data/vector_store/<version_id>/
     Registers the version as STAGING in logs
 
@@ -106,9 +105,9 @@ python -m rag_engine.build_pipeline
     Activate Batch number shown by the tool
     Confirmation message on new batch shownGo
 
-### Choose role from sidebar : Employee
-    Query can be asked - 3 independent questions at a time
-    Can refresh (^R) and ask more questions
+### 5) Choose role from sidebar : Employee
+    Start asking your HR questions (3 independent questions at a time)
+         Can refresh (^R) and ask more questions
     Logging can be observed in Checker option
     Maker option helps for mutation - ADD, MODIFY and DELETE
     Admin option gives Analytics
