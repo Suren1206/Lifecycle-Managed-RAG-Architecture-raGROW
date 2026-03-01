@@ -90,24 +90,28 @@ ______________________________________________________
         b) Ensure Ollama is running locally
         c) Make sure the embedding model is available (mxbai-embed-large:335m)
 
-### 2) Run :
+### 2) To start using the tools
+Step 1 : Run 
 ```text
 python -m rag_engine.build_pipeline
 ```
 This creates:
     data/vector_store/<version_id>/
+    
     Registers the version as STAGING in logs
+    
     This file needs to run if we want to start a FRESH batch
-
-### 3) Run:
+    
+Step 2 : Run 
 ```text
 streamlit run app.py
 ```
-#### a) Select role from sidebar: Maker
-    Activate Batch number shown by the tool
-    Confirmation message on new batch shownGo
 
-#### b) Choose role from sidebar : Employee
+#### Step 3 : 
+    a) Select role from sidebar: Maker
+    Activate Batch number shown by the tool
+    Confirmation message on new batch shown.
+    b) Choose role from sidebar : Employee
     Start asking your HR questions (3 independent questions at a time)
          Can refresh (^R) and ask more questions
     Maker option helps for mutation - ADD, MODIFY and DELETE
