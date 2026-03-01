@@ -97,6 +97,7 @@ python -m rag_engine.build_pipeline
 This creates:
     data/vector_store/<version_id>/
     Registers the version as STAGING in logs
+    This file needs to run if we want to start a FRESH batch
 
 ### 3) Run:
 ```text
@@ -109,11 +110,11 @@ streamlit run app.py
 #### b) Choose role from sidebar : Employee
     Start asking your HR questions (3 independent questions at a time)
          Can refresh (^R) and ask more questions
-    Logging can be observed in Checker option
     Maker option helps for mutation - ADD, MODIFY and DELETE
-    Admin option gives Analytics
+    Checker option helps to promote a new batch (after running rag_engine.build_pipleine.py); 
+        We can also observe the logging here for quick monitoring
+    Admin option gives Dashboad,Overview of Registry and Analytics
 ____________________________________________________________
-
 # Trinity Goals Behind raGROW
 raGROW was developed under three simultaneous intentions:
 
