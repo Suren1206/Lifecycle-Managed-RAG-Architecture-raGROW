@@ -84,27 +84,34 @@ logs/
 
 ## How to Run
 ______________________________________________________
+```
+### 1) a) Install dependencies (Python 3.10+ recommended)
+       b) Ensure Ollama is running locally
+       c) Make sure the embedding model is available (mxbai-embed-large:335m)
 
-### 1) Install dependencies (Python 3.10+ recommended)
-
-### 2) Ensure Ollama is running locally
-
-### 3) Activate environment
-
-### 4) Run:
+### 2) Run :
 ```text
 streamlit run app.py
 ```
-### 5) Select role from sidebar:
+strea
+    This creates:
+    data/vector_store/<version_id>/
+    Registers the version as STAGING in logs
 
-#### (a) Employee
+### 3) Run:
+```text
+python -m rag_engine.build_pipeline
+```
+### 4) Select role from sidebar: Maker
+    Activate Batch number shown by the tool
+    Confirmation message on new batch shownGo
 
-#### (b) Maker
-
-#### (c) Checker
-
-#### (d) Admin
-
+### Choose role from sidebar : Employee
+    Query can be asked - 3 independent questions at a time
+    Can refresh (^R) and ask more questions
+    Logging can be observed in Checker option
+    Maker option helps for mutation - ADD, MODIFY and DELETE
+    Admin option gives Analytics
 ____________________________________________________________
 
 # Trinity Goals Behind raGROW
