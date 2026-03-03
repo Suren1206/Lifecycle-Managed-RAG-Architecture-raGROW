@@ -152,6 +152,8 @@ No additional scope is planned under Phase II.
 A separate precision-first research initiative will build on lessons from raGROW.
 
 That project will focus on:
+
+
     • Objective retrieval optimization frameworks
     
     • Chunking strategy evaluation
