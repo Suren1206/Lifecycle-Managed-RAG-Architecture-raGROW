@@ -2,19 +2,33 @@
 ## 1. System Boundary
 raGROW is a governed Retrieval-Augmented Generation system designed for controlled, versioned knowledge growth of HR policy documents through human-reviewed updates triggered by validated retrieval failures.
 Phase I Scope:
+
     • Domain: HR policy documents only
+    
     • Source type: Word or PDF documents only
+    
     • Single-domain deployment
+    
     • No autonomous growth
+    
     • LLM acts only as editorial assistant
+    
     • Conversational interface with controlled memory
+    
     • Dual-layer approval (Maker–Checker)
+    
     • Version-controlled lifecycle
+    
 raGROW is not:
+
     • A general chatbot
+    
     • A multi-domain ingestion engine
+    
     • A self-learning system
+    
     • A sentiment or analytics tool (Phase II only)
+    
 
 ## 2. Actors
 ### 1. Employee User
