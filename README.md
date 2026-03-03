@@ -100,7 +100,7 @@ This creates:
     
     Registers the version as STAGING in logs
     
-    This file needs to run if we want to start a FRESH batch
+    This file needs to run if we want to have a new fresh batch
     
 Step 2 : Run 
 ```text
@@ -108,15 +108,17 @@ streamlit run app.py
 ```
 
 #### Step 3 : 
-    a) Select role from sidebar: Maker
+    a) Select role from sidebar: Checker
     Activate Batch number shown by the tool
     Confirmation message on new batch shown.
     b) Choose role from sidebar : Employee
     Start asking your HR questions (3 independent questions at a time)
          Can refresh (^R) and ask more questions
+         If the question has a similarity score of MID range (0.60 to 0.74), tool requests for rephrasing giving another chance
+         If the question has LOW range similarity score (Less than 0.60), then tool provides regret message
     Maker option helps for mutation - ADD, MODIFY and DELETE
     Checker option helps to promote a new batch (after running rag_engine.build_pipleine.py); 
-        We can also observe the logging here for quick monitoring
+        We can also observe the logging history along with fetch results for monitoring and decisions for future updates
     Admin option gives Dashboad,Overview of Registry and Analytics
 ____________________________________________________________
 # Trinity Goals Behind raGROW
