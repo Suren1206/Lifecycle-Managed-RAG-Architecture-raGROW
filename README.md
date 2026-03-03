@@ -90,7 +90,7 @@ ______________________________________________________
         b) Ensure Ollama is running locally
         c) Make sure the embedding model is available (mxbai-embed-large:335m)
 
-### 2) To start using the tools
+### 2) To start using the tool
 Step 1 : Run 
 ```text
 python -m rag_engine.build_pipeline
