@@ -21,7 +21,7 @@ Every interaction is auditable.
 # Phase I Capabilities
 Phase I establishes the structural foundation:
 
-    • Deterministic chunking (800-character fixed window)
+    • Chunking based on Sentence boundary with min 300 chars & no overlapping      
     
     • Cosine similarity retrieval (FAISS IndexFlatIP)
     
@@ -145,9 +145,8 @@ Phase II will extend raGROW in three focused directions:
     
     2. Optimization of accuracy through calibration experiments
     
-    3. Cloud-native deployment architecture
-    
-No additional scope is planned under Phase II.
+    3. Cloud-native deployment architecture    
+
 
 
 # Follow-Up Research Track
