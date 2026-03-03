@@ -6,13 +6,17 @@ import requests
 
 from pathlib import Path
 from rag_engine.logger import generate_version_id, register_version
+from rag_engine.chunking import _sentence_chunk_text, diagnostic_chunk_report
 
 
 EMBED_MODEL = "mxbai-embed-large:335m"
 OLLAMA_URL = "http://localhost:11434/api/embeddings"
 VECTOR_DIMENSION = 1024
-CHUNK_SIZE = 800
 
+
+# ============================================================
+# Embedding
+# ============================================================
 
 def _embed_text(text: str) -> np.ndarray:
     response = requests.post(
@@ -31,13 +35,47 @@ def _embed_text(text: str) -> np.ndarray:
     return vector / norm
 
 
-def _chunk_text(text: str):
-    return [
-        text[i:i + CHUNK_SIZE]
-        for i in range(0, len(text), CHUNK_SIZE)
-        if text[i:i + CHUNK_SIZE].strip()
-    ]
+# ============================================================
+# Header Parser (V2.1)
+# ============================================================
 
+def header_parser(text: str):
+
+    lines = text.splitlines()
+
+    structured_blocks = {}
+    current_header = None
+    collecting_rules = False
+
+    for raw_line in lines:
+        line = raw_line.strip()
+
+        if not line:
+            continue
+
+        if (
+            line.isupper()
+            and any(c.isalpha() for c in line)
+            and line not in {"POLICY STATEMENT", "OPERATIONAL COVERAGE", "RULES"}
+        ):
+            current_header = line
+            structured_blocks[current_header] = []
+            collecting_rules = False
+            continue
+
+        if line == "Rules":
+            collecting_rules = True
+            continue
+
+        if collecting_rules and current_header:
+            structured_blocks[current_header].append(line)
+
+    return structured_blocks
+
+
+# ============================================================
+# Build Pipeline
+# ============================================================
 
 def build_new_version(description: str = None) -> str:
 
@@ -54,7 +92,6 @@ def build_new_version(description: str = None) -> str:
         meta_map_path = staging_dir / "chunk_id_to_metadata.json"
         embeddings_path = staging_dir / "embeddings.npy"
 
-                
         corpus_file = Path("data/master_corpus.txt")
 
         if not corpus_file.exists():
@@ -62,41 +99,48 @@ def build_new_version(description: str = None) -> str:
 
         full_text = corpus_file.read_text(encoding="utf-8", errors="ignore")
 
-        chunks = _chunk_text(full_text)
-
-        if not chunks:
-            raise RuntimeError("No chunks generated from corpus.")
-
-        print(f"Total chunks to embed: {len(chunks)}")
+        header_map = header_parser(full_text)
 
         embeddings = []
         index_to_chunk_id = {}
         chunk_id_to_metadata = {}
 
-        for idx, chunk in enumerate(chunks):
+        chunk_counter = 0
+        all_chunks_for_diagnostics = []
 
-            print(f"Embedding chunk {idx + 1}/{len(chunks)}")
+        for header, rule_lines in header_map.items():
 
-            vec = _embed_text(chunk)
-            embeddings.append(vec)
+            combined_text = " ".join(rule_lines)
 
-            chunk_id = f"chunk_{idx}"
-            index_to_chunk_id[str(idx)] = chunk_id
+            chunks = _sentence_chunk_text(combined_text)
 
-            chunk_id_to_metadata[chunk_id] = {
-                "chunk_index": idx,
-                "text": chunk
-            }
+            for chunk in chunks:
+
+                print(f"Embedding chunk {chunk_counter + 1}")
+
+                vec = _embed_text(chunk)
+                embeddings.append(vec)
+
+                chunk_id = f"chunk_{chunk_counter}"
+                index_to_chunk_id[str(chunk_counter)] = chunk_id
+
+                chunk_id_to_metadata[chunk_id] = {
+                    "chunk_index": chunk_counter,
+                    "header": header,
+                    "text": chunk
+                }
+
+                all_chunks_for_diagnostics.append(chunk)
+                chunk_counter += 1
+
+        if not embeddings:
+            raise RuntimeError("No chunks generated.")
 
         embeddings_array = np.vstack(embeddings).astype(np.float32)
 
         index = faiss.IndexFlatIP(VECTOR_DIMENSION)
         index.add(embeddings_array)
 
-        if index.ntotal == 0:
-            raise RuntimeError("FAISS index has zero vectors.")
-
-        print("Writing FAISS index...")
         faiss.write_index(index, str(index_path))
         np.save(embeddings_path, embeddings_array)
 
@@ -118,6 +162,8 @@ def build_new_version(description: str = None) -> str:
             status="STAGING"
         )
 
+        diagnostic_chunk_report(all_chunks_for_diagnostics)
+
         print(f"\n--- Build Complete: {version_id} ---\n")
 
         return version_id
@@ -127,6 +173,7 @@ def build_new_version(description: str = None) -> str:
             shutil.rmtree(staging_dir)
         raise
 
+
 if __name__ == "__main__":
-    version_id = build_new_version(description="Initial Build")
+    version_id = build_new_version(description="V2 Header + Sentence Chunking")
     print(f"Version created: {version_id}")
