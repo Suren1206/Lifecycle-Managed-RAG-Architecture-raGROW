@@ -1,5 +1,5 @@
 # raGROW
-Governed Retrieval-Augmented Generation with version-controlled knowledge evolution.
+(Governed Retrieval-Augmented Generation with version-controlled knowledge evolution)
 
 
 
