@@ -79,8 +79,11 @@ Chroma may be used later **for comparison purposes**.
 ### Chosen
 
 ```
-YYYYMMDD_B01
-YYYYMMDD_E01
+<timestamp>_<sequence>
+Example:
+20260320_01
+20260320_02
+
 ```
 
 ### Why
