@@ -28,10 +28,10 @@ Core features include:
 - Rollback-safe activation
 - Role-separated Streamlit interface
 Supported roles:
-- Employee
-- Maker
-- Checker
-- Admin
+  - Employee
+  - Maker
+  - Checker
+  - Admin
 
 # Architecture Principles
 raGROW follows strict operational constraints:
@@ -93,8 +93,11 @@ streamlit run app.py
 **Employee**
 - Submit HR questions
 - Retrieval thresholds determine response behavior
+  
 HIGH similarity → answer generated
+
 MID similarity → rephrase request
+
 LOW similarity → regret response
 
 **Maker**
@@ -115,17 +118,24 @@ Demonstrating that RAG can function as structured Business-As-Usual infrastructu
 ##    3. Professional Engineering Discipline
 Building a system that reflects lifecycle thinking, architecture integrity, and operational governance.
 
-# Phase II (Planned)
+## Phase II (Planned)
+
 Phase II will extend raGROW in three directions:
-    1. Emergency controlled incremental update mode
-    2. Retrieval accuracy calibration experiments
-    3. Cloud-native deployment architecture
+
+1. Emergency controlled incremental update mode
+2. Retrieval accuracy calibration experiments
+3. Cloud-native deployment architecture
 
 # Closing Note
+
 raGROW began with a simple question:
-What if RAG could grow — but with discipline?
+
+**What if RAG could grow — but with discipline?**
+
 The result is a lifecycle-governed system capable of controlled mutation, version integrity, and measurable oversight.
+
 It is not built for demonstration.
+
 It is built for sustainable knowledge growth.
 
 
