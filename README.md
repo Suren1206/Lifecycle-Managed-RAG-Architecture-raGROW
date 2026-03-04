@@ -5,30 +5,33 @@ raGROW treats knowledge not as static content but as a managed asset that must e
 # Project Philosophy
 Most RAG systems operate as utilities. raGROW was designed as a **governed knowledge engine**.
 Core principles:
-• Growth must be intentional
-• Retrieval must be measurable
-• Generation must be gated
-• Mutation must be governed
+- Growth must be intentional
+- Retrieval must be measurable
+- Generation must be gated
+- Mutation must be governed
 The system does not self-learn and does not mutate its corpus autonomously.
 Every change is human-reviewed, version-controlled, and auditable.
 
 # Phase I Capabilities
 Phase I establishes the governance and lifecycle foundation.
 Core features include:
-• Sentence-boundary chunking (minimum 300 characters, no overlap)
-• FAISS cosine similarity retrieval (IndexFlatIP)
-• Similarity band routing (0.75 / 0.60 thresholds)
-• Controlled generation limited to HIGH similarity band
-• Version lifecycle governance (STAGING → ACTIVE)
-• Maker–Checker mutation approval workflow
-• Batch mutation engine supporting ADD / MODIFY / DELETE
-• Automatic full rebuild after approved mutation batches
-• Single ACTIVE version enforcement
-• SQL-based interaction logging and analytics
-• Rollback-safe activation
-• Role-separated Streamlit interface
+- Sentence-boundary chunking (minimum 300 characters, no overlap)
+- FAISS cosine similarity retrieval (IndexFlatIP)
+- Similarity band routing (0.75 / 0.60 thresholds)
+- Controlled generation limited to HIGH similarity band
+- Version lifecycle governance (STAGING → ACTIVE)
+- Maker–Checker mutation approval workflow
+- Batch mutation engine supporting ADD / MODIFY / DELETE
+- Automatic full rebuild after approved mutation batches
+- Single ACTIVE version enforcement
+- SQL-based interaction logging and analytics
+- Rollback-safe activation
+- Role-separated Streamlit interface
 Supported roles:
-Employee • Maker • Checker • Admin
+- Employee
+- Maker
+- Checker
+- Admin
 
 # Architecture Principles
 raGROW follows strict operational constraints:
@@ -63,32 +66,45 @@ Prerequisites
 • Embedding model available (mxbai-embed-large)
 
 ## Step 1 — Build Initial Version
+```
 python -m rag_engine.build_pipeline
+
+```
 This creates:
+```
 data/vector_store/<version_id>
+
+```
 The version is registered as STAGING.
 
 ## Step 2 — Start the Interface
+```
 streamlit run app.py
+
+```
 
 ## Step 3 — Role Workflows
 **Checker**
-• Activate STAGING version
-• Review pending mutation batches
-• Approve or reject mutations
-• Promote STAGING → ACTIVE
+- Activate STAGING version
+- Review pending mutation batches
+- Approve or reject mutations
+- Promote STAGING → ACTIVE
+  
 **Employee**
-• Submit HR questions
-• Retrieval thresholds determine response behavior
+- Submit HR questions
+- Retrieval thresholds determine response behavior
 HIGH similarity → answer generated
 MID similarity → rephrase request
 LOW similarity → regret response
+
 **Maker**
-• Submit corpus mutations
-• ADD / MODIFY / DELETE policy blocks
+- Submit corpus mutations
+- ADD / MODIFY / DELETE policy blocks
+  
 **Admin**
-• View registry overview
-• Monitor analytics and interaction logs
+- View registry overview
+- Monitor analytics and interaction logs
+  
 
 # Trinity Goals Behind raGROW
 raGROW was developed with three objectives:
