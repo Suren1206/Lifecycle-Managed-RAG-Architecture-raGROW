@@ -60,10 +60,14 @@ logs/
 Note: Replace master_corpus_sample.txt with your own policy corpus and rename it to master_corpus.txt.
 
 # Running the System
-Prerequisites
+**Prerequisites**
+
 • Python 3.10+
+
 • Ollama running locally
+
 • Embedding model available (mxbai-embed-large)
+
 
 ## Step 1 — Build Initial Version
 ```
