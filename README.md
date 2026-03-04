@@ -1,3 +1,45 @@
+# raGROW
+Governed Retrieval-Augmented Generation with version-controlled knowledge evolution.
+
+
+
+## System Lifecycle
+
+```
+Employee Query
+      |
+      ▼
+Retrieval Engine (FAISS)
+      |
+      ▼
+Similarity Band Routing
+      |
+      ├─ LOW  → Regret Response
+      ├─ MID  → Rephrase Request
+      └─ HIGH → Controlled Generation
+               |
+               ▼
+        Interaction Logging
+               |
+               ▼
+        Gap Identification
+               |
+               ▼
+        Maker Mutation Queue
+               |
+               ▼
+        Checker Batch Approval
+               |
+               ▼
+        Corpus Rebuild Pipeline
+               |
+               ▼
+      New STAGING Version Created
+               |
+               ▼
+      Promotion → ACTIVE Version
+```
+
 **raGROW** is a governed Retrieval-Augmented Generation (RAG) system designed to support disciplined, version-controlled evolution of HR policy knowledge bases through structured human review.
 Unlike typical RAG implementations that prioritize flexibility, raGROW is built around **governance, lifecycle integrity, and controlled growth**. Knowledge expansion occurs only when validated retrieval gaps are observed, ensuring that corpus evolution remains need-driven and evidence-based.
 raGROW treats knowledge not as static content but as a managed asset that must evolve under oversight.
