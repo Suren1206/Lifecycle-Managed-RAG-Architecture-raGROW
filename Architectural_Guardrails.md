@@ -12,6 +12,6 @@
 10. Notebook experiments must migrate reusable logic to core modules.
 11. Docker-ready structure (no OS assumptions).
 12. Single application entry point.
-13.Generation must not execute outside HIGH threshold band.
-14.Mutation must rebuild full index — no partial FAISS mutation.
-15.Success flag derived from retrieval outcome, not generation result.
+13. Generation must not execute outside HIGH threshold band.
+14. Mutation must rebuild full index — no partial FAISS mutation.
+15. Success flag derived from retrieval outcome, not generation result.
