@@ -1,11 +1,11 @@
-raGROW User Guide
+# raGROW User Guide
 
-Maker
+## Maker
 1. Submit ADD / MODIFY / DELETE mutation
 2. Mutation enters queue
 3. Await checker approval
 
-Checker
+## Checker
 1. Review queued mutations
 2. Reject individual mutations if needed
 3. Approve batch
