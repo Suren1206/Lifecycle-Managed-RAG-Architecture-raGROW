@@ -1,181 +1,115 @@
-raGROW is a governed Retrieval-Augmented Generation (RAG) system designed to enable disciplined, version-controlled evolution of HR policy knowledge bases through structured human review.
-Unlike generic RAG implementations that prioritize flexibility, raGROW is built around governance, lifecycle integrity, and controlled growth.
-Growth is initiated only when user interactions reveal validated retrieval gaps, ensuring expansion is need-driven and evidence-based.
-raGROW treats knowledge not as static content — but as an asset that must evolve need-based and  under oversight.
+**raGROW** is a governed Retrieval-Augmented Generation (RAG) system designed to support disciplined, version-controlled evolution of HR policy knowledge bases through structured human review.
+Unlike typical RAG implementations that prioritize flexibility, raGROW is built around **governance, lifecycle integrity, and controlled growth**. Knowledge expansion occurs only when validated retrieval gaps are observed, ensuring that corpus evolution remains need-driven and evidence-based.
+raGROW treats knowledge not as static content but as a managed asset that must evolve under oversight.
 
 # Project Philosophy
-Most RAG systems are deployed as utilities.
-raGROW was designed as a regulated knowledge engine.
-Its core premise is simple:
-Growth must be intentional.
-Retrieval must be measurable.
-Generation must be gated.
-Mutation must be governed.
-This system is not a chatbot.
-It is not autonomous.
-It does not self-learn.
-Every expansion is human-reviewed.
-Every activation is versioned.
-Every interaction is auditable.
+Most RAG systems operate as utilities. raGROW was designed as a **governed knowledge engine**.
+Core principles:
+• Growth must be intentional
+• Retrieval must be measurable
+• Generation must be gated
+• Mutation must be governed
+The system does not self-learn and does not mutate its corpus autonomously.
+Every change is human-reviewed, version-controlled, and auditable.
 
 # Phase I Capabilities
-Phase I establishes the structural foundation:
-
-    • Chunking based on Sentence boundary with min 300 chars & no overlapping      
-    
-    • Cosine similarity retrieval (FAISS IndexFlatIP)
-    
-    • Threshold-based routing (0.75 / 0.60)
-    
-    • Controlled generation (HIGH band only)
-    
-    • Version lifecycle governance (STAGING → ACTIVE)
-    
-    • Maker–Checker approval discipline
-    
-    • Full rebuild mutation engine (ADD / MODIFY / DELETE)
-    
-    • Single ACTIVE invariance enforcement
-    
-    • Governance analytics via SQL-backed reporting
-    
-    • Rollback-safe activation
-    
-    • Streamlit-based role-separated UI
-    
-The system supports:
-Employee
-Maker
-Checker
-Admin
-with strict isolation and lifecycle discipline.
+Phase I establishes the governance and lifecycle foundation.
+Core features include:
+• Sentence-boundary chunking (minimum 300 characters, no overlap)
+• FAISS cosine similarity retrieval (IndexFlatIP)
+• Similarity band routing (0.75 / 0.60 thresholds)
+• Controlled generation limited to HIGH similarity band
+• Version lifecycle governance (STAGING → ACTIVE)
+• Maker–Checker mutation approval workflow
+• Batch mutation engine supporting ADD / MODIFY / DELETE
+• Automatic full rebuild after approved mutation batches
+• Single ACTIVE version enforcement
+• SQL-based interaction logging and analytics
+• Rollback-safe activation
+• Role-separated Streamlit interface
+Supported roles:
+Employee • Maker • Checker • Admin
 
 # Architecture Principles
-    • No in-place vector mutation
-    • No uncontrolled memory injection
-    • No generation without retrieval authority
-    • No automatic knowledge growth
-    • No hard-coded environment assumptions
-    • Full version traceability
+raGROW follows strict operational constraints:
+• No in-place vector mutation
+• No uncontrolled memory injection
+• No generation without retrieval authority
+• No automatic corpus growth
+• Full version traceability
+These constraints ensure predictable lifecycle behavior and auditability.
 
-## Folder Structure (Key Components)
-
-```text
-app.py                         # Streamlit UI (role-based routing)
-
+# Repository Structure
+```
+app.py                         # Streamlit role-based UI
 rag_engine/
     retriever.py              # FAISS retrieval logic
-    generator.py              # Controlled generation layer
-    mutation_engine.py        # Corpus mutation (ADD/MODIFY/DELETE)
+    generator.py              # Controlled generation
+    mutation_batch.py         # Batch mutation processor
     logger.py                 # Version registry + interaction logging
-    build_pipeline.py         # Vector rebuild process
-
+    build_pipeline.py         # Corpus rebuild and vector creation
 data/
     master_corpus.txt         # Canonical mutable corpus
     vector_store/             # Versioned FAISS indices
-
 logs/
-    rag_logs.db               # Governance database
-
-## Note : Replace master_corpus_sample.txt with your own HR policy corpus and rename to master_corpus.txt before running.
-
+    rag_logs.db               # Governance database							
 ```
+Note: Replace master_corpus_sample.txt with your own policy corpus and rename it to master_corpus.txt.
 
+# Running the System
+Prerequisites
+• Python 3.10+
+• Ollama running locally
+• Embedding model available (mxbai-embed-large)
 
-## How to Run
-______________________________________________________
-
-### 1) Pre-requisites
-        a) Install dependencies (Python 3.10+ recommended)
-        b) Ensure Ollama is running locally
-        c) Make sure the embedding model is available (mxbai-embed-large:335m)
-
-### 2) To start using the tool
-Step 1 : Run 
-```text
+## Step 1 — Build Initial Version
 python -m rag_engine.build_pipeline
-```
 This creates:
-    data/vector_store/<version_id>/
-    
-    Registers the version as STAGING in logs
-    
-    This file needs to run if we want to have a new fresh batch
-    
-Step 2 : Run 
-```text
+data/vector_store/<version_id>
+The version is registered as STAGING.
+
+## Step 2 — Start the Interface
 streamlit run app.py
-```
 
-#### Step 3 : 
-    a) Select role from sidebar: Checker
-    Activate Batch number shown by the tool
-    Confirmation message on new batch shown.
-    b) Choose role from sidebar : Employee
-    Start asking your HR questions (3 independent questions at a time)
-         Can refresh (^R) and ask more questions
-         If the question has a similarity score of MID range (0.60 to 0.74), tool requests for rephrasing giving another chance
-         If the question has LOW range similarity score (Less than 0.60), then tool provides regret message
-    Maker option helps for mutation - ADD, MODIFY and DELETE
-    Checker option helps to promote a new batch (after running rag_engine.build_pipleine.py); 
-        We can also observe the logging history along with fetch results for monitoring and decisions for future updates
-    Admin option gives Dashboad,Overview of Registry and Analytics
-____________________________________________________________
+## Step 3 — Role Workflows
+**Checker**
+• Activate STAGING version
+• Review pending mutation batches
+• Approve or reject mutations
+• Promote STAGING → ACTIVE
+**Employee**
+• Submit HR questions
+• Retrieval thresholds determine response behavior
+HIGH similarity → answer generated
+MID similarity → rephrase request
+LOW similarity → regret response
+**Maker**
+• Submit corpus mutations
+• ADD / MODIFY / DELETE policy blocks
+**Admin**
+• View registry overview
+• Monitor analytics and interaction logs
+
 # Trinity Goals Behind raGROW
-raGROW was developed under three simultaneous intentions:
-
-    1. Deep Technical Mastery
-    
-To understand RAG internals beyond abstraction — chunking mechanics, embedding behavior, lifecycle integrity, similarity calibration, governance analytics.
-
-    2. Production-Ready Governance Tool
-    
-To demonstrate that RAG can operate as structured Business-As-Usual infrastructure rather than experimental automation.
-
-    3. Professional Differentiation
-    
-To build a system that reflects architectural rigor, lifecycle thinking, and engineering discipline beyond typical prototype implementations.
-
+raGROW was developed with three objectives:
+##    1. Deep Technical Mastery
+Understanding RAG internals beyond abstraction — chunking behavior, embedding structure, lifecycle governance, and retrieval calibration.
+##    2. Governed Knowledge Infrastructure
+Demonstrating that RAG can function as structured Business-As-Usual infrastructure rather than experimental automation.
+##    3. Professional Engineering Discipline
+Building a system that reflects lifecycle thinking, architecture integrity, and operational governance.
 
 # Phase II (Planned)
-
-Phase II will extend raGROW in three focused directions:
-
-    1. Emergency Controlled Incremental Mode
-    
-    2. Optimization of accuracy through calibration experiments
-    
-    3. Cloud-native deployment architecture    
-
-
-
-# Follow-Up Research Track
-A separate precision-first research initiative will build on lessons from raGROW.
-
-That project will focus on:
-
-
-    • Objective retrieval optimization frameworks
-    
-    • Chunking strategy evaluation
-    
-    • Embedding structure analysis
-    
-    • Semantic validation methodologies
-    
-    • Corpus-independent design principles
-    
-Where raGROW is governance-first, 
-
-the next research track will be precision-first.
+Phase II will extend raGROW in three directions:
+    1. Emergency controlled incremental update mode
+    2. Retrieval accuracy calibration experiments
+    3. Cloud-native deployment architecture
 
 # Closing Note
-raGROW began as a simple idea:
-
+raGROW began with a simple question:
 What if RAG could grow — but with discipline?
+The result is a lifecycle-governed system capable of controlled mutation, version integrity, and measurable oversight.
+It is not built for demonstration.
+It is built for sustainable knowledge growth.
 
-It evolved into a lifecycle-governed system capable of controlled mutation, version integrity, and measurable oversight.
 
-It is not built to impress a demo.
-
-It is built to endure growth.
