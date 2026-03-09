@@ -366,11 +366,35 @@ elif role == "Maker":
                 current_block.append(line)
 
         return blocks
+  
+    
+    blocks_for_modify = {
+        chunk_id: meta
+        for chunk_id, meta in metadata.items()
+    }
 
-    blocks = load_blocks()
+    if blocks_for_modify:
 
-    if blocks:
-        selected_block = st.selectbox("Select Block to Modify", blocks)
+        chunk_options = {
+            f'{meta["header"]} | {chunk_id}': chunk_id
+            for chunk_id, meta in blocks_for_modify.items()
+        }
+
+        selected_label = st.selectbox(
+            "Select Block to Modify",
+            list(chunk_options.keys()),
+            key="modify_select"
+        )
+
+        selected_chunk = chunk_options[selected_label]
+        selected_meta = blocks_for_modify[selected_chunk]
+        selected_block = selected_meta["text"]
+        selected_header = selected_meta["header"]
+
+
+        selected_meta = blocks_for_modify[selected_chunk]
+        selected_block = selected_meta["text"]
+        selected_header = selected_meta["header"]
 
         if selected_block:
         # Extract header from selected block
@@ -427,9 +451,7 @@ elif role == "Maker":
     st.divider()
     st.markdown("### Delete Policy Block")
 
-    from rag_engine.mutation_engine import delete_block_by_exact_text, finalize_delete_mutation
-
-    
+     
     blocks_for_delete = {
         meta["header"]: meta["text"]
         for meta in metadata.values()
