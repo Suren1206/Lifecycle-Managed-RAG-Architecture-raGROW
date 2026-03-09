@@ -90,6 +90,16 @@ def process_batch():
         # 2. Read master corpus
     master_path = Path("data/master_corpus.txt")
 
+    from datetime import datetime
+
+    backup_dir = Path("data/corpus_backups")
+    backup_dir.mkdir(exist_ok=True)
+
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    backup_path = backup_dir / f"corpus_backup_{timestamp}.txt"
+
+    backup_path.write_text(master_path.read_text(encoding="utf-8"), encoding="utf-8")
+
     if not master_path.exists():
         raise FileNotFoundError("master_corpus.txt not found.")
 
