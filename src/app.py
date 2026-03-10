@@ -569,9 +569,9 @@ elif role == "Checker":
                 st.write("Proposed change:")
                 st.text_area("", value=row[3], height=80, disabled=True, key=f"prop_{queue_id}")
 
-                if st.button(f"Reject {row[1]} for {row[2]}", key=f"reject_{queue_id}"):
-                    remove_from_queue(queue_id)
-                    st.rerun()           
+            if st.button(f"Reject {row[1]} for {row[2]}", key=f"reject_{queue_id}"):
+                remove_from_queue(queue_id)
+                st.rerun()           
 
             st.divider()
 
