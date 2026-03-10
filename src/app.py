@@ -398,9 +398,7 @@ elif role == "Maker":
 
         if selected_block:
         # Extract header from selected block
-            block_lines = selected_block.splitlines()
-            selected_header = block_lines[1].strip() if len(block_lines) > 1 else ""
-            
+                        
             st.text_area(
                 "Current Block Content",
                 value=selected_block,
@@ -421,12 +419,7 @@ elif role == "Maker":
                 else:
                     from rag_engine.mutation_batch import add_to_queue
 
-                    block_lines = modified_block.splitlines()
-
-                    if len(block_lines) >= 3:
-                        cleaned_body = "\n".join(block_lines[2:-1]).strip()
-                    else:
-                        cleaned_body = ""
+                    cleaned_body = modified_block.strip()
 
                     add_to_queue(
                         base_version_id=active_version,
@@ -449,12 +442,12 @@ elif role == "Maker":
     # DELETE SECTION
     # ============================================================
     st.divider()
-    st.markdown("### Delete Policy Block")
+    st.markdown("### Delete Policy Block")    
+  
 
-     
     blocks_for_delete = {
-        meta["header"]: meta["text"]
-        for meta in metadata.values()
+        f'{meta["header"]} | {chunk_id}': (meta["header"], chunk_id, meta["text"])
+        for chunk_id, meta in metadata.items()
     }
 
     if blocks_for_delete:      
@@ -466,7 +459,7 @@ elif role == "Maker":
             )
 
         st.markdown("#### Block Content")
-        st.code(blocks_for_delete[selected_header])
+        st.code(blocks_for_delete[selected_header][2])
 
         if st.button("Add Delete Mutation to Queue"):
 
@@ -476,9 +469,9 @@ elif role == "Maker":
                 add_to_queue(
                     base_version_id=active_version,
                     mutation_type="DELETE",
-                    header=selected_header,
-                    chunk_id=None,
-                    original_text=blocks_for_delete[selected_header].strip(),
+                    header=blocks_for_delete[selected_header][0],
+                    chunk_id=blocks_for_delete[selected_header][1],
+                    original_text=blocks_for_delete[selected_header][2].strip(),
                     proposed_text="",
                     submitted_by="Maker"
                 )
@@ -564,18 +557,21 @@ elif role == "Checker":
         for row in pending:
             queue_id = row[0]
 
-            st.write(f"Type: {row[1]} | Header: {row[2]} | Status: {row[4]} | Queue ID: {row[0]}")
+            st.write(f"Type: {row[1]} | Header: {row[2]} | Status: {row[4]}")
 
             if row[1] == "DELETE":
                 st.write("Block to be deleted:")
                 st.code(row[5])
             else:
-                st.write("Proposed change:")
-                st.code(row[3])
+                st.write("Original text:")
+                st.text_area("", value=row[5], height=80, disabled=True, key=f"orig_{queue_id}")
 
-        if st.button(f"Reject Mutation {queue_id}", key=f"reject_{queue_id}"):     
-            remove_from_queue(queue_id)
-            st.rerun()
+                st.write("Proposed change:")
+                st.text_area("", value=row[3], height=80, disabled=True, key=f"prop_{queue_id}")
+
+                if st.button(f"Reject {row[1]} for {row[2]}", key=f"reject_{queue_id}"):
+                    remove_from_queue(queue_id)
+                    st.rerun()           
 
             st.divider()
 
@@ -583,7 +579,9 @@ elif role == "Checker":
             from rag_engine.mutation_batch import process_batch
             new_version = process_batch()
             st.success(f"New STAGING version created: {new_version}")
-            st.rerun()               
+            st.rerun()
+
+            st.divider()                 
             
     else:
         st.info("No pending mutations.")
